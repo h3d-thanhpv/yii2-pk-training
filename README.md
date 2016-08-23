@@ -119,3 +119,10 @@ Create folder `api` and implement API module in this folder.
 
 You can list all book via rest api: [http://localhost/yii2-training/api/v1/books](http://localhost/yii2-training/api/v1/books)
 
+Tag 0.7: Demo AngularJs
+-----------------
+
+Create view and action `angular` in SiteController.
+
+Create `AngularAsset` and `JsAsset`, use them in `angular` view.
+
