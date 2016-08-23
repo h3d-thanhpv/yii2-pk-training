@@ -39,4 +39,47 @@ Example gii generator link: [http://localhost/yii2-training/web/index.php?r=gii]
 
 Generate model and CRUD for book table.
 
+Tag 0.4: Pretty url and add custom routing
+--------------
+
+Enable pretty url in `urlManager` component config.
+
+```php
+'urlManager' => [
+    'enablePrettyUrl' => true,
+    'showScriptName' => false,
+    'rules' => [
+    ],
+],
+```
+
+Add htaccess config for rewrite url in `web` folder.
+
+```
+RewriteEngine on
+RewriteBase /yii2-training/web
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d 
+
+RewriteRule . index.php
+```
+
+Use parameterizing route config
+ 
+```
+'urlManager' => [
+    'enablePrettyUrl' => true,
+    'showScriptName' => false,
+    'rules' => [
+        '<controller>/<action:(view)>/<id:\d+>' => '<controller>/<action>',
+        '<controller>s' => '<controller>/index',
+    ],
+],
+```
+
+Now you can show list book in link: [http://localhost/yii2-training/web/books](http://localhost/yii2-training/web/books)
+
+And view detail a book: [http://localhost/yii2-training/web/book/view/1](http://localhost/yii2-training/web/book/view/1)
+
+
 
