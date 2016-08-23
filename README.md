@@ -111,3 +111,6 @@ Tag 0.6: Implement API modules
 ----------------
 
 Create folder `api` and implement API module in this folder.
+
+You can list all book via rest api: [http://localhost/yii2-training/api/v1/books](http://localhost/yii2-training/api/v1/books)
+
