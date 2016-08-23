@@ -32,3 +32,11 @@ Modify migration script for create table, insert test data, ... to database
 
 Run `yii migrate` to apply your migration.
 
+Tag 0.3: CRUD with gii generator
+--------------
+
+Example gii generator link: [http://localhost/yii2-training/web/index.php?r=gii](http://localhost/yii2-training/web/index.php?r=gii)
+
+Generate model and CRUD for book table.
+
+
