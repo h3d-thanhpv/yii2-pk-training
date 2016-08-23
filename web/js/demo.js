@@ -5,7 +5,7 @@ projectApp.controller('loadBookCtrl', ['$scope', '$http', '$filter', function($s
     $scope.baseUrl = "http://localhost/yii2-training/api/v1/books/";
     $scope.$watch('bookId', function (bookId) {
         if (angular.isDefined(bookId)) {
-
+           getBookInfo($scope.baseUrl + bookId);
         }
     });
     function getBookInfo(url) {
@@ -13,7 +13,7 @@ projectApp.controller('loadBookCtrl', ['$scope', '$http', '$filter', function($s
             method: 'GET',
             url: url
         }).success(function (data) {
-            $scope.sequenceId = data;
+            $scope.bookInfo = data;
         }).error(function (data, status, headers, config) {
         });
     }
