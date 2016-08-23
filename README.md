@@ -81,5 +81,28 @@ Now you can show list book in link: [http://localhost/yii2-training/web/books](h
 
 And view detail a book: [http://localhost/yii2-training/web/book/view/1](http://localhost/yii2-training/web/book/view/1)
 
+Tag 0.5: Use access control
+-----------------
 
+We will implement that: `User must login to view list book, create, delete book`
 
+Update `behaviors` function in `BookController`
+
+```php
+public function behaviors()
+{
+    return array_merge(parent::behaviors(), [
+        'access' => [
+            'class' => AccessControl::className(),
+            'rules' => [
+                // allow authenticated users
+                [
+                    'allow' => true,
+                    'roles' => ['@'],
+                ],
+                // everything else is denied
+            ],
+        ],
+    ]);
+}
+```
