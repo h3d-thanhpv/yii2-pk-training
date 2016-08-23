@@ -106,3 +106,8 @@ public function behaviors()
     ]);
 }
 ```
+
+Tag 0.6: Implement API modules
+----------------
+
+Create folder `api` and implement API module in this folder.
