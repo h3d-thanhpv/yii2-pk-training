@@ -6,6 +6,11 @@ Tag 0.1: Init app
 --------------
 Init basic app from [https://github.com/yiisoft/yii2-app-basic](https://github.com/yiisoft/yii2-app-basic)
 
+```
+composer global require "fxp/composer-asset-plugin:*"
+composer create-project --prefer-dist yiisoft/yii2-app-basic yii2-training
+```
+
 Tag 0.2: Config DB and migration
 --------------
 Modify db config base on your mysql server:
