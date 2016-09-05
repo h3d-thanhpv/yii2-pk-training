@@ -126,3 +126,29 @@ Create view and action `angular` in SiteController.
 
 Create `AngularAsset` and `JsAsset`, use them in `angular` view.
 
+Tag 0.8: I18n and l10n
+----------------
+
+Add `i18n` component in config
+
+```php
+'i18n' => [
+    'translations' => [
+        'app*' => [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@app/messages',
+            'sourceLanguage' => 'en-US',
+            'fileMap' => [
+                'app' => 'app.php',
+                'app/error' => 'error.php',
+                'app/pk' => 'pk.php'
+            ],
+        ],
+    ],
+]
+```
+
+Create folder `messages` and 2 sub-folder for `vi-VN` - Vietnamese and `jp-JP` - Japanese language.
+
+Create file `app.php`, `pk.php` and define key-value from source language to target language.
+
