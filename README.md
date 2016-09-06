@@ -152,3 +152,54 @@ Create folder `messages` and 2 sub-folder for `vi-VN` - Vietnamese and `jp-JP` -
 
 Create file `app.php`, `pk.php` and define key-value from source language to target language.
 
+Tag 0.9: Use ActiveRecord and ActiveQuery for custom sql query
+--------------------
+
+Yii2 ActiveRecord support 2 syntax for bind variable to query:
+```php
+where('subtotal > :threshold', [':threshold' => $threshold]); // syntax like yii1
+
+where(['>', 'subtotal', $threshold]);
+```
+
+Add more condition in where clause:
+
+The `where()` method specifies the `WHERE` fragment of a SQL query. You can use one of the three formats to specify a `WHERE` condition:
+
+* string format, e.g. `'status=1'`
+* hash format, e.g. `['status' => 1, 'type' => 2]`
+* operator format, e.g. `['like', 'name', 'test']`
+
+More operator for where condition: [http://www.yiiframework.com/doc-2.0/guide-db-query-builder.html#where](http://www.yiiframework.com/doc-2.0/guide-db-query-builder.html#where)
+
+Selecting extra fields:
+
+```php
+$customers = Customer::find()
+    ->select([
+        '{{customer}}.*', // select all customer fields
+        'COUNT({{order}}.id) AS ordersCount' // calculate orders count
+    ])
+    ->joinWith('orders') // ensure table junction
+    ->groupBy('{{customer}}.id') // group the result to ensure aggregation function works
+    ->all();
+```
+
+More: [http://www.yiiframework.com/doc-2.0/guide-db-active-record.html#selecting-extra-fields](http://www.yiiframework.com/doc-2.0/guide-db-active-record.html#selecting-extra-fields)
+
+Working with relations data:
+
+```php
+//Add function to model
+public function getOrders()
+{
+    return $this->hasMany(Order::className(), ['customer_id' => 'id']);
+}
+```
+
+More: [http://www.yiiframework.com/doc-2.0/guide-db-active-record.html#relational-data](http://www.yiiframework.com/doc-2.0/guide-db-active-record.html#relational-data)
+
+Tag 0.10: Use `getter` and `setter` in model for statistical query
+--------------
+
+To be define..
