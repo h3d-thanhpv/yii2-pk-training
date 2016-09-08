@@ -24,7 +24,19 @@ install:
   - travis_retry composer global require "codeception/verify=*"
   - travis_retry composer update --dev --prefer-dist --no-interaction
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
+
+before_script:
+  # show some versions and env information
+  - php -r "echo INTL_ICU_VERSION . \"\n\";"
+  - php -r "echo INTL_ICU_DATA_VERSION . \"\n\";"
+  - mysql --version
+  # initialize databases
+  - mysql -e 'CREATE DATABASE yii2_basic_tests;';
+
 script:
+  - cd tests
+  - codeception/bin/yii migrate
+  - codecept build
   - |
-    php -S localhost:8080 -t web > /dev/null 2>&1 &
-    composer exec codecept run
+      php -S ../yii serve > /dev/null 2>&1 &
+      codecept run
