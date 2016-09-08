@@ -2,6 +2,8 @@ ProjectKit Training - Yii2 Basic Template
 ============================
 
 
+[![Build Status](https://travis-ci.org/thanhpv-h9/yii2-pk-training.svg?branch=master)](https://travis-ci.org/thanhpv-h9/yii2-pk-training)
+
 Tag 0.1: Init app
 --------------
 Init basic app from [https://github.com/yiisoft/yii2-app-basic](https://github.com/yiisoft/yii2-app-basic)
@@ -198,6 +200,11 @@ public function getOrders()
 ```
 
 More: [http://www.yiiframework.com/doc-2.0/guide-db-active-record.html#relational-data](http://www.yiiframework.com/doc-2.0/guide-db-active-record.html#relational-data)
+
+Tag 0.9.1: Add travis-ci.yml
+---------------
+
+Create .travis.yml and config to run codecept test functional
 
 Tag 0.10: Use `getter` and `setter` in model for statistical query
 --------------
