@@ -35,8 +35,8 @@ before_script:
 
 script:
   - cd tests
-  - codeception/bin/yii migrate
+  - php codeception/bin/yii migrate
   - codecept build
   - |
       php -S ../yii serve > /dev/null 2>&1 &
-      codecept run
+      codecept run functional
