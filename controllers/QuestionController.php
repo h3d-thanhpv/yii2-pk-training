@@ -33,4 +33,14 @@ class QuestionController extends base\QuestionController
         $model->content = \Yii::$app->request->getRawBody();
         $model->save();
     }
+
+    public function actionUploadImage()
+    {
+        $filename = $_FILES['file']['name'];
+        $destination = \Yii::getAlias('@webroot/upload/') . $filename;
+        if(move_uploaded_file( $_FILES['file']['tmp_name'] , $destination )) {
+            return \Yii::getAlias('@web/upload/') . $filename;
+        } else
+            return false;
+    }
 }
