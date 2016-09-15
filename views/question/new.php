@@ -24,6 +24,20 @@ QuestionAsset::register($this);
             </div>
         </div>
     </div>
+    <form name="form">
+        Single Image with validations
+        <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+             ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+             ngf-resize="{width: 100, height: 100}">Select</div>
+        <button type="submit" ng-click="submit()">Upload</button>
+    </form>
+    <div>
+        Image thumbnail: <img ngf-thumbnail="file">
+    </div>
+
+    <uib-progressbar animate="false" value="progressPercentage" type="success"><b>{{progressPercentage}}%</b></uib-progressbar>
+
+    <div class="clearfix"></div>
     <button type="button" class="btn btn-primary" id="addAnswerButton" ng-click="createQuestion()">Tạo câu hỏi</button>
     <pre>{{questionInfo | json}}</pre>
 </div>
