@@ -206,7 +206,20 @@ Tag 0.9.1: Add travis-ci.yml
 
 Create .travis.yml and config to run codecept test functional
 
-Tag 0.10: Use `getter` and `setter` in model for statistical query
+Tag 0.10: Use `getter` in model for statistical query
 --------------
 
-To be define..
+```php
+public function getTotalQuestion()
+{
+    return self::find()->count();
+}
+```
+
+Then you can get totalQuestion value in view:
+
+```
+/* @var $model app\models\Question */
+
+$model->totalQuestion
+```
