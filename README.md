@@ -263,3 +263,96 @@ public function behaviors()
 
 When guest user request to action `create`, it will be redirect to login page.
 
+Tag 0.12: Role Base Access Control (RBAC)
+------------------
+
+Using `DbManager`: Add `authManager` component to `web.php` and `console.php`
+
+```php
+'components' => [
+    'authManager' => [
+        'class' => 'yii\rbac\DbManager',
+    ],
+    // ...
+],
+```
+
+Before you can go on you need to create those tables in the database. To do this, you can use the migration stored in `@yii/rbac/migrations`:
+
+```php
+yii migrate --migrationPath=@yii/rbac/migrations
+```
+
+Create `RbacController` in `commands` folder:
+
+```php
+<?php
+namespace app\commands;
+
+use Yii;
+use yii\console\Controller;
+
+class RbacController extends Controller
+{
+    /**
+     * This command create 2 permissions is createQuestion, updateQuestion
+     * create 2 roles is author and admin
+     * Assign author to user id 101 (demo/demo) and admin to user id 100 (admin/admin)
+     */
+    public function actionInit()
+    {
+        $auth = Yii::$app->authManager;
+
+        // add "updateQuestion" permission
+        $updateQuestion = $auth->createPermission('updateQuestion');
+        $updateQuestion->description = 'Update question';
+        $auth->add($updateQuestion);
+
+        // add "createQuestion" permission
+        $createQuestion = $auth->createPermission('createQuestion');
+        $createQuestion->description = 'Create question';
+        $auth->add($createQuestion);
+
+        // add "author" role and give this role the "createQuestion" permission
+        $author = $auth->createRole('author');
+        $auth->add($author);
+        $auth->addChild($author, $createQuestion);
+
+        // add "admin" role and give this role the "updateQuestion" permission
+        // as well as the permissions of the "author" role
+        $admin = $auth->createRole('admin');
+        $auth->add($admin);
+        $auth->addChild($admin, $updateQuestion);
+        $auth->addChild($admin, $author);
+
+        $auth->assign($author, 101);
+        $auth->assign($admin, 100);
+    }
+}
+```
+
+Then run `yii rbac/init` to apply `init` action.
+
+Apply in `actionCreate` and `actionUpdate`:
+
+```php
+<?php
+public function actionCreate()
+{
+    if(\Yii::$app->user->can('createQuestion')) {
+        return parent::actionCreate();
+    } else {
+        throw new ForbiddenHttpException('You dont have permission to createQuestion');
+    }
+}
+
+public function actionUpdate($id)
+{
+    if(\Yii::$app->user->can('updateQuestion')) {
+        return parent::actionUpdate($id);
+    } else {
+        throw new ForbiddenHttpException('You dont have permission to updateQuestion');
+    }
+}
+```
+
