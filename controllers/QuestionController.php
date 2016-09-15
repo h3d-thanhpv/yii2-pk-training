@@ -3,6 +3,7 @@ namespace app\controllers;
 
 
 use app\models\Question;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 class QuestionController extends base\QuestionController
@@ -13,6 +14,23 @@ class QuestionController extends base\QuestionController
     public function behaviors()
     {
         return array_merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => [
+                            'create', 'update', 'delete', 'new-question', 'create-question', 'upload-image'
+                        ],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
