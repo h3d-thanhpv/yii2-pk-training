@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Question;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 class QuestionController extends base\QuestionController
 {
@@ -20,7 +21,7 @@ class QuestionController extends base\QuestionController
                     [
                         'allow' => true,
                         'actions' => ['index', 'view'],
-                        'roles' => ['?'],
+                        'roles' => ['?', '@'],
                     ],
                     [
                         'allow' => true,
@@ -60,5 +61,23 @@ class QuestionController extends base\QuestionController
             return \Yii::getAlias('@web/upload/') . $filename;
         } else
             return false;
+    }
+
+    public function actionCreate()
+    {
+        if(\Yii::$app->user->can('createQuestion')) {
+            return parent::actionCreate();
+        } else {
+            throw new ForbiddenHttpException('You dont have permission to createQuestion');
+        }
+    }
+
+    public function actionUpdate($id)
+    {
+        if(\Yii::$app->user->can('updateQuestion')) {
+            return parent::actionUpdate($id);
+        } else {
+            throw new ForbiddenHttpException('You dont have permission to updateQuestion');
+        }
     }
 }
