@@ -223,3 +223,43 @@ Then you can get totalQuestion value in view:
 
 $model->totalQuestion
 ```
+
+Tag 0.10: Access control filter (ACF)
+-------------
+
+Access Control Filter (ACF) is a simple authorization method implemented as [yii\filters\AccessControl](http://www.yiiframework.com/doc-2.0/yii-filters-accesscontrol.html) which is best used by applications that only need some simple access control.
+
+Now I attach `access` filter to `QuestionController`, I want guest can access index action,
+but must authenticated user can update or delete.
+
+We attach new config to `behaviors()` function:
+
+```php
+/**
+ * @inheritdoc
+ */
+public function behaviors()
+{
+    return array_merge(parent::behaviors(), [
+        'access' => [
+            'class' => AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => ['index', 'view'],
+                    'roles' => ['?'],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => ['create', 'update', 'delete'],
+                    'roles' => ['@'],
+                ],
+            ],
+        ],
+        // ... other behaviors
+    ]);
+}
+```
+
+When guest user request to action `create`, it will be redirect to login page.
+
