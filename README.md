@@ -2,7 +2,7 @@ ProjectKit Training - Yii2 Basic Template
 ============================
 
 
-[![Build Status](https://travis-ci.org/thanhpv-h9/yii2-pk-training.svg?branch=master)](https://travis-ci.org/thanhpv-h9/yii2-pk-training)
+[![Build Status](https://travis-ci.org/thanhpv-102/yii2-pk-training.svg?branch=master)](https://travis-ci.org/thanhpv-102/yii2-pk-training)
 
 Tag 0.1: Init app
 --------------
@@ -286,7 +286,6 @@ yii migrate --migrationPath=@yii/rbac/migrations
 Create `RbacController` in `commands` folder:
 
 ```php
-<?php
 namespace app\commands;
 
 use Yii;
@@ -336,7 +335,6 @@ Then run `yii rbac/init` to apply `init` action.
 Apply in `actionCreate` and `actionUpdate`:
 
 ```php
-<?php
 public function actionCreate()
 {
     if(\Yii::$app->user->can('createQuestion')) {
