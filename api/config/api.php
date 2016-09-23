@@ -56,8 +56,8 @@ $config = [
     ],
     'modules' => [
         'v1' => [
-            'basePath' => '@app/api/modules/v1',
-            'class' => 'app\api\modules\v1\Api',
+            'basePath' => '@api/modules/v1',
+            'class' => 'api\modules\v1\Api',
         ]
     ],
     'params' => $params,
