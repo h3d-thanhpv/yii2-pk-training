@@ -354,3 +354,57 @@ public function actionUpdate($id)
 }
 ```
 
+Tag 0.13: Login with facebook account
+-------------------------------------
+
+Create app on facebook, get `application id` and `app secret`
+
+Use `yii2-authclient` extension for OAuth2 flow:
+
+```
+composer require --prefer-dist yiisoft/yii2-authclient
+```
+
+Add config `authClientCollection` component on your `web.php`
+
+```
+'authClientCollection' => [
+    'class' => 'yii\authclient\Collection',
+    'clients' => [
+        'facebook' => [
+            'class' => 'yii\authclient\clients\Facebook',
+            'clientId' => 'facebook_client_id',
+            'clientSecret' => 'facebook_client_secret',
+        ],
+    ],
+]
+```
+
+Add `auth` action to your `SiteController` and setup callback:
+
+```
+'auth' => [
+    'class' => 'yii\authclient\AuthAction',
+    'successCallback' => [$this, 'onAuthSuccess'],
+],
+```
+
+```
+/**
+ * @param $client ClientInterface
+ */
+public function onAuthSuccess($client)
+{
+    //Get user info
+    /** @var array $attributes */
+    $attributes = $client->getUserAttributes();
+    $email = ArrayHelper::getValue($attributes, 'email'); //email info
+    $id = ArrayHelper::getValue($attributes, 'id'); // id facebook user
+    $name = ArrayHelper::getValue($attributes, 'name'); // name facebook account
+
+    //Login user
+    //For demo, I will login with admin/admin default account
+    $admin = User::findByUsername('admin');
+    Yii::$app->user->login($admin);
+}
+```
