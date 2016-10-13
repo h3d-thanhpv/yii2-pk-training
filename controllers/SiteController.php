@@ -2,8 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
+use yii\authclient\ClientInterface;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -49,6 +52,10 @@ class SiteController extends Controller
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'onAuthSuccess'],
             ],
         ];
     }
@@ -126,5 +133,23 @@ class SiteController extends Controller
     public function actionAngularDemo()
     {
         return $this->render('angular');
+    }
+
+    /**
+     * @param $client ClientInterface
+     */
+    public function onAuthSuccess($client)
+    {
+        //Get user info
+        /** @var array $attributes */
+        $attributes = $client->getUserAttributes();
+        $email = ArrayHelper::getValue($attributes, 'email'); //email info
+        $id = ArrayHelper::getValue($attributes, 'id'); // id facebook user
+        $name = ArrayHelper::getValue($attributes, 'name'); // name facebook account
+
+        //Login user
+        //For demo, I will login with admin/admin default account
+        $admin = User::findByUsername('admin');
+        Yii::$app->user->login($admin);
     }
 }
