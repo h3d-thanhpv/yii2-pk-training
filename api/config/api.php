@@ -23,6 +23,12 @@ $config = [
                     'controller' => [
                         'v1/book', 'v1/translate'
                     ],
+                ],
+                [
+                    'class' => \api\components\TokenUrlRule::className(),
+                    'controller' => [
+                        'v1/token',
+                    ],
                 ]
             ],
         ],
