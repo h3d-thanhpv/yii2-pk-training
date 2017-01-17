@@ -408,3 +408,18 @@ public function onAuthSuccess($client)
     Yii::$app->user->login($admin);
 }
 ```
+
+Tag 0.14: Security API server with JWT token
+------------------------------------
+
+We need to create an action for provide JWT token for clients, and an action provide public key
+if use RSA algorithm.
+
+Generate and private key via command:
+```bash
+ssh-keygen -t rsa -b 4096
+```
+
+I generated and private key and stored in `api/certs` folder.
+
+I wrote an `JwtHelper` class for getPrivateKey, getPublicKey and generateToken.
