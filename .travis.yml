@@ -17,25 +17,9 @@ cache:
 
 install:
   - travis_retry composer self-update && composer --version
-  - travis_retry composer global require "fxp/composer-asset-plugin:^1.2.0"
-  - travis_retry composer global require "codeception/codeception=*"
-  - travis_retry composer global require "codeception/specify=*"
-  - travis_retry composer global require "codeception/verify=*"
+  - travis_retry composer global require "fxp/composer-asset-plugin:~1.1.1"
   - travis_retry composer update --dev --prefer-dist --no-interaction
-  - export PATH="$HOME/.composer/vendor/bin:$PATH"
-
-before_script:
-  # show some versions and env information
-  - php -r "echo INTL_ICU_VERSION . \"\n\";"
-  - php -r "echo INTL_ICU_DATA_VERSION . \"\n\";"
-  - mysql --version
-  # initialize databases
-  - mysql -e 'CREATE DATABASE yii2_basic_tests;';
-
 script:
-  - cd tests
-  - php codeception/bin/yii migrate
-  - codecept build
   - |
-      php -S ../yii serve > /dev/null 2>&1 &
-      codecept run functional
+    php -S localhost:8080 -t web > /dev/null 2>&1 &
+    composer exec codecept run
