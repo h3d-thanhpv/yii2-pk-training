@@ -72,8 +72,9 @@ class IpRateLimiter extends Object implements RateLimitInterface
         $cache = \Yii::$app->getCache();
         if ($cache) {
             $userIP = $request->getUserIP();
-            $cache->set($this->allowanceKey . $userIP, $allowance);
-            $cache->set($this->allowanceUpdatedAtKey . $userIP, $timestamp);
+            $duration = 60;
+            $cache->set($this->allowanceKey . $userIP, $allowance, $duration);
+            $cache->set($this->allowanceUpdatedAtKey . $userIP, $timestamp, $duration);
         } else {
             throw new TooManyRequestsHttpException("Please enable cache component");
         }
