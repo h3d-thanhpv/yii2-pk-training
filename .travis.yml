@@ -30,7 +30,7 @@ before_script:
 
 script:
   - cd tests
-  - php bin/yii migrate
+  - php bin/yii migrate --interactive=0
   - codecept build
   - |
       php -S bin/yii serve > /dev/null 2>&1 &
