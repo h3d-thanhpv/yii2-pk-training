@@ -3,6 +3,9 @@
 namespace api\modules\v1\controllers;
 
 use fproject\rest\ActiveController;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\auth\HttpBearerAuth;
+use yii\filters\auth\QueryParamAuth;
 use yii\web\Response;
 
 class AuthenticationController extends ActiveController
@@ -11,6 +14,14 @@ class AuthenticationController extends ActiveController
     {
         $behaviors = parent::behaviors();
         $behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
+
+        $behaviors['authenticator'] = [
+            'class' => CompositeAuth::className(),
+            'authMethods' => [
+                HttpBearerAuth::className(),
+                QueryParamAuth::className(),
+            ],
+        ];
 
         return $behaviors;
     }

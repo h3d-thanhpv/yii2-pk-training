@@ -43,8 +43,10 @@ $config = [
         ],
         // Set this enable authentication in our API
         'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => false, // Don't forget to set Auto login to false
+            'identityClass' => 'api\modules\v1\models\User',
+            'enableAutoLogin' => false,
+            'enableSession' => false,
+            'loginUrl' => 'null'
         ],
         // Enable logging for API in a api Directory different than web directory
         'log' => [
