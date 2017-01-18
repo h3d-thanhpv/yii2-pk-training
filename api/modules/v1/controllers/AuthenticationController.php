@@ -2,10 +2,12 @@
 
 namespace api\modules\v1\controllers;
 
+use api\modules\v1\models\IpRateLimiter;
 use fproject\rest\ActiveController;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
+use yii\filters\RateLimiter;
 use yii\web\Response;
 
 class AuthenticationController extends ActiveController
@@ -21,6 +23,11 @@ class AuthenticationController extends ActiveController
                 HttpBearerAuth::className(),
                 QueryParamAuth::className(),
             ],
+        ];
+
+        $behaviors['rateLimiter'] = [
+            'class' => RateLimiter::className(),
+            'user' => IpRateLimiter::getInstance(),
         ];
 
         return $behaviors;
