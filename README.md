@@ -423,3 +423,15 @@ ssh-keygen -t rsa -b 4096
 I generated and private key and stored in `api/certs` folder.
 
 I wrote an `JwtHelper` class for getPrivateKey, getPublicKey and generateToken.
+
+Now clients can request new token, public key via link:
+```
+Generate by RSA key
+POST http://<host>/api/v1/tokens/generate-public
+
+Generate by HMAC
+POST http://<host>/api/v1/tokens/generate-private
+
+Get public key for verify token RSA key
+http://<host>/api/v1/tokens/public-key
+```
