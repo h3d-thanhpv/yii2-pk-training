@@ -435,3 +435,14 @@ POST http://<host>/api/v1/tokens/generate-private
 Get public key for verify token RSA key
 http://<host>/api/v1/tokens/public-key
 ```
+
+Tag 0.15: Use Rate Limit Filter to prevent abuse API
+----------------------------
+
+Default, `RateLimiter` limit API usage of each user. But with example, I will
+ limit API usage of each IP.
+ 
+I save info of IP and update allowance of IP in cache storage.
+
+Create a model `IpRateLimiter` implements `yii\filters\RateLimitInterface`, and
+implement function `getRateLimit`, `loadAllowance`, `saveAllowance`
